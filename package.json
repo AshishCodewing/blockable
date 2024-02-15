@@ -1,0 +1,30 @@
+{
+	"name": "wordpress-plugin-template",
+	"title": "WordPress Plugin Template",
+	"version": "1.0.0",
+	"homepage": "https://github.com/hlashbrooke/WordPress-Plugin-Template",
+	"main": "Gruntfile.js",
+	"scripts": {
+		"start": "wp-scripts start",
+		"build": "wp-scripts build",
+		"build:analyze": "wp-scripts build --webpack-bundle-analyze",
+		"lint:js": "wp-scripts lint-js"
+	},
+	"devDependencies": {
+		"@wordpress/eslint-plugin": "^17.8.0",
+		"@wordpress/i18n": "^4.51.0",
+		"@wordpress/prettier-config": "^3.8.0",
+		"@wordpress/scripts": "^27.2.0",
+		"autoprefixer": "^10.4.17",
+		"css-minimizer-webpack-plugin": "^6.0.0",
+		"grunt": "^1.0.3",
+		"grunt-contrib-cssmin": "~0.9.0",
+		"grunt-contrib-less": "^2.0.0",
+		"grunt-contrib-uglify": "~0.4.0",
+		"grunt-contrib-watch": "^1.1.0",
+		"postcss": "^8.4.35",
+		"postcss-prefixwrap": "1.44.0",
+		"tailwindcss": "^3.4.1",
+		"webpack-bundle-analyzer": "^4.10.1"
+	}
+}
