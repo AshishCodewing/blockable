@@ -120,20 +120,11 @@ class Blockable_Wordpress_Gutenberg_Blocks {
 
 		$this->script_suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		register_activation_hook( $this->file, array( $this, 'install' ) );
-
 		// Load frontend JS & CSS.
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 10 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10 );
 
 		// Load admin JS & CSS.
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 10, 1 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_styles' ), 10, 1 );
-
-		// Load API for generic admin functions.
-		if ( is_admin() ) {
-			$this->admin = new Blockable_Wordpress_Gutenberg_Blocks_Admin_API();
-		}
 
 		// Handle localisation.
 		$this->load_plugin_textdomain();
@@ -185,43 +176,23 @@ class Blockable_Wordpress_Gutenberg_Blocks {
 	}
 
 	/**
-	 * Load frontend CSS.
-	 *
-	 * @access  public
-	 * @return void
-	 * @since   1.0.0
-	 */
-	public function enqueue_styles() {
-		wp_register_style( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'css/frontend.css', array(), $this->_version );
-		wp_enqueue_style( $this->_token . '-frontend' );
-	} // End enqueue_styles ()
-
-	/**
-	 * Load frontend Javascript.
+	 * Load frontend CSS and Javascript.
 	 *
 	 * @access  public
 	 * @return  void
 	 * @since   1.0.0
 	 */
 	public function enqueue_scripts() {
+		wp_register_style( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'css/frontend.css', array(), $this->_version );
+		wp_enqueue_style( $this->_token . '-frontend' );
 		wp_register_script( $this->_token . '-frontend', esc_url( $this->assets_url ) . 'js/frontend' . $this->script_suffix . '.js', array( 'jquery' ), $this->_version, true );
 		wp_enqueue_script( $this->_token . '-frontend' );
 	} // End enqueue_scripts ()
 
-	/**
-	 * Admin enqueue style.
-	 *
-	 * @param string $hook Hook parameter.
-	 *
-	 * @return void
-	 */
-	public function admin_enqueue_styles( $hook = '' ) {
-		wp_register_style( $this->_token . '-admin', esc_url( $this->assets_url ) . 'css/admin.css', array(), $this->_version );
-		wp_enqueue_style( $this->_token . '-admin' );
-	} // End admin_enqueue_styles ()
+	
 
 	/**
-	 * Load admin Javascript.
+	 * Load admin CSS and Javascript.
 	 *
 	 * @access  public
 	 *
@@ -231,6 +202,8 @@ class Blockable_Wordpress_Gutenberg_Blocks {
 	 * @since   1.0.0
 	 */
 	public function admin_enqueue_scripts( $hook = '' ) {
+		wp_register_style( $this->_token . '-admin', esc_url( $this->assets_url ) . 'css/admin.css', array(), $this->_version );
+		wp_enqueue_style( $this->_token . '-admin' );
 		wp_register_script( $this->_token . '-admin', esc_url( $this->assets_url ) . 'js/admin' . $this->script_suffix . '.js', array( 'jquery' ), $this->_version, true );
 		wp_enqueue_script( $this->_token . '-admin' );
 	} // End admin_enqueue_scripts ()
@@ -282,46 +255,5 @@ class Blockable_Wordpress_Gutenberg_Blocks {
 
 		return self::$_instance;
 	} // End instance ()
-
-	/**
-	 * Cloning is forbidden.
-	 *
-	 * @since 1.0.0
-	 */
-	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Cloning of Blockable_Wordpress_Gutenberg_Blocks is forbidden' ) ), esc_attr( $this->_version ) );
-
-	} // End __clone ()
-
-	/**
-	 * Unserializing instances of this class is forbidden.
-	 *
-	 * @since 1.0.0
-	 */
-	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, esc_html( __( 'Unserializing instances of Blockable_Wordpress_Gutenberg_Blocks is forbidden' ) ), esc_attr( $this->_version ) );
-	} // End __wakeup ()
-
-	/**
-	 * Installation. Runs on activation.
-	 *
-	 * @access  public
-	 * @return  void
-	 * @since   1.0.0
-	 */
-	public function install() {
-		$this->_log_version_number();
-	} // End install ()
-
-	/**
-	 * Log the plugin version number.
-	 *
-	 * @access  public
-	 * @return  void
-	 * @since   1.0.0
-	 */
-	private function _log_version_number() { //phpcs:ignore
-		update_option( $this->_token . '_version', $this->_version );
-	} // End _log_version_number ()
 
 }

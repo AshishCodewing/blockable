@@ -46,4 +46,19 @@ function blockable_wordpress_gutenberg_blocks() {
 	return $instance;
 }
 
+/**
+ * Main plugin file.
+ *
+ * @since 1.0.0
+ */
+defined('BLOCKABLE_WP_PLUGIN_FILE__') || define('BLOCKABLE_WP_PLUGIN_FILE__', __FILE__);
+
+/**
+ * Plugin directory.
+ *
+ * @since 1.0.0
+ */
+defined('BLOCKABLE_WP_PLUGIN_DIR__') || define('BLOCKABLE_WP_PLUGIN_DIR__', plugin_dir_path(BLOCKABLE_WP_PLUGIN_FILE__));
+defined('BLOCKABLE_WP_PLUGIN_URL__') || define('BLOCKABLE_WP_PLUGIN_URL__', plugin_dir_url(BLOCKABLE_WP_PLUGIN_FILE__));
+
 blockable_wordpress_gutenberg_blocks();
